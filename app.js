@@ -18,6 +18,15 @@ const DbConnection = require('./models/dbConnect').conncectDatabase();
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// session - cookie
+const sessioin = require('express-session')
+app.use(sessioin({
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.EXPRESS_SESSION_SECRET
+}))
+const cookieparser = require('cookie-parser')
+app.use(cookieparser())
 // routes
 const index = require('./routes/index');
 const ErrorHandler = require('./utils/ErrorHandler');
