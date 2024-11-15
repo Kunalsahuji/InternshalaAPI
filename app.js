@@ -14,7 +14,17 @@ PORT = process.env.PORT
 
 // routes
 const index = require('./routes/index');
+const ErrorHandler = require('./utils/ErrorHandler');
 app.use('/', index)
+
+// error handling
+app.all('*', (req, res, next) => {
+    next(new ErrorHandler(`Requested URL Not Found ${req.url}`, 404))
+})
+
+// generatedErrors Middleware
+const { generatedErrors } = require('./middleware/error');
+app.use(generatedErrors)
 
 // running port
 app.listen(PORT, console.log(`server running on ${PORT}`))
