@@ -7,10 +7,16 @@ const app = express()
 const logger = require('morgan')
 app.use(logger("tiny"))
 
-
 // import env
 require('dotenv').config();
 PORT = process.env.PORT
+
+// Database Connection 
+const DbConnection = require('./models/dbConnect').conncectDatabase();
+
+// body parser
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 // routes
 const index = require('./routes/index');
